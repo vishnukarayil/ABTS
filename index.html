@@ -275,8 +275,8 @@ eans:function(d){
   var e=ELIG[S.eIdx];S.eAns[e.id]=d.v;
   if(e.id==='age'&&d.v==='no'){S.outcome='future_anon';S.screen='outcome';render();return}
   if(S.eIdx<ELIG.length-1){S.eIdx++;render();return}
-  var a=S.eAns;
-  S.outcome=(a.weight==='no')?'future':((a.well==='no'||a.recent==='yes'||a.procedure==='yes')?'reserve':'eligible');
+  var a=S.eAns,bad=ELIG.filter(function(q){return a[q.id]===q.bad}).map(function(q){return q.id});
+  S.outcome=bad.indexOf('weight')>=0?'future':(bad.length?'reserve':'eligible');
   S.screen='outcome';render();
 },
 toreg:function(){S.screen='register';render()},
