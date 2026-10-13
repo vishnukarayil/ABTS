@@ -104,7 +104,7 @@ const CONFIG={
   API_URL:"https://script.google.com/macros/s/AKfycbynfs8G6UFZyoFjk49vHTgHCrMcDBMgD4ZxxoIJkzPXsa5XSqdQZkvDwGRyusIfIfXIlg/exec",   // the /exec URL from your Apps Script deployment
   ORG_NAME:"Ahalia Blood Transfusion Services",
   EVENT_NAME:"Blood Donation Digital Drive",
-  CONTACT:"Call Dr. Vishnu K R, Pathologist, ACL",
+  CONTACT:"Contact bloodbank@ahalia.in",
   PAGE_URL:"https://vishnukarayil.github.io/ABTS/",                                   // e.g. "https://donate.pathonotes.in/" (blank = use this page's address)
   ORGAN_PLEDGE_URL:"https://sites.google.com/view/ahaliablooddonors/home",                             // optional: official organ pledge page, shown as a separate link
   // Keep this list identical to COLLEGES in Code.gs
@@ -122,8 +122,8 @@ const ELIG=[
   {id:"age",q:"Are you 18 or older?",bad:"no"},
   {id:"weight",q:"Do you weigh 45 kg or more?",bad:"no"},
   {id:"well",q:"Are you healthy today, with no fever, cold or infection, and not on antibiotics?",bad:"no"},
-  {id:"recent",q:"Have you donated blood in the last 3 months (4 months if you are a woman)?",bad:"yes"},
-  {id:"procedure",q:"In the last 6 months, have you had a tattoo, piercing, surgery or a blood transfusion?",bad:"yes"}
+  {id:"recent",q:"Have you donated blood in the last 3 months?",bad:"yes"},
+  {id:"procedure",q:"In the last 1 year, have you got a tattoo, piercing, accident or surgery?",bad:"yes"}
 ];
 const PROGRESS={hook:4,myth:22,type:42,elig:62,outcome:78,register:90,result:100,anon:100};
 
@@ -215,7 +215,7 @@ result:function(){
   var r=S.reg,o=S.outcome,h='';
   h+=cardHtml();
   h+='<div class="status '+S.sync+'" id="sync" role="status">'+esc(S.syncMsg)+'</div>';
-  var next=o==='eligible'?'Next step: collect your sticker at the stall. We\u2019ll message you about the first donation camp.':'You\u2019re on our list. We\u2019ll message you when you can donate.';
+  var next=o==='eligible'?'Next step: collect your coupon at the stall. We\u2019ll message you about the first donation camp.':'You\u2019re on our list. We\u2019ll message you when you can donate.';
   h+='<p class="lead" style="margin-top:16px">'+esc(next)+'</p>';
   h+='<button class="btn" data-a="save">Save my card as an image</button><button class="btn ghost" data-a="share">Share my link with friends</button>';
   if(CONFIG.ORGAN_PLEDGE_URL)h+='<p class="fine">Interested in pledging organs? That is a separate register: <a href="'+esc(CONFIG.ORGAN_PLEDGE_URL)+'" target="_blank" rel="noopener">organ pledge</a>.</p>';
