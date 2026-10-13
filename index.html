@@ -105,10 +105,10 @@ const CONFIG={
   ORG_NAME:"Ahalia Blood Transfusion Services",
   EVENT_NAME:"Blood Donation Digital Drive",
   CONTACT:"Call Dr. Vishnu K R, Pathologist, ACL",
-  PAGE_URL:"https://donate.pathonotes.in/",                                     // e.g. "https://donate.pathonotes.in/" (blank = use this page's address)
+  PAGE_URL:"https://vishnukarayil.github.io/ABTS/",                                   // e.g. "https://donate.pathonotes.in/" (blank = use this page's address)
   ORGAN_PLEDGE_URL:"https://sites.google.com/view/ahaliablooddonors/home",                             // optional: official organ pledge page, shown as a separate link
   // Keep this list identical to COLLEGES in Code.gs
-  COLLEGES:["Engineering College","Business School","Paramedical College","Pharmacy College","Nursing College","Ayurveda College","Optometry School","Other"]
+  COLLEGES:["Ahalia Ayurveda Medical College","Ahalia College of Nursing","Ahalia Diabetes Hospital","Ahalia Foundation Eye Hospital","Ahalia Public School","Ahalia School of Engineering & Technology","Ahalia School of Optometry & Research Centre","Ahalia School of Paramedical Sciences","Ahalia School of Pharmacy","Ahalia School of Management","Ahalia School of Commerce & Mathematics","Ahalia Woman and Child Hospital","Other"]
 };
 /* ======================================================================== */
 
@@ -145,7 +145,7 @@ let S=fresh();
 /* ---------- levels ---------- */
 function level(){
   if(S.outcome==='future_anon')return 'Future Hero';
-  if(S.reg)return (S.reg.referrals||0)>=3?'Champion':'Lifesaver';
+  if(S.reg)return 'Lifesaver';
   if(S.mythDone)return 'Rookie';
   return '';
 }
@@ -192,8 +192,8 @@ outcome:function(){
     h+='<span class="tag wait">Future Hero</span><h2>Not yet, and that\u2019s fine.</h2><p class="lead">You\u2019re below the minimum weight for now. Join the list and we\u2019ll keep in touch for when you can donate.</p><button class="btn" data-a="toreg">Join the list</button>';
   }else{
     h+='<span class="tag wait">Future Hero</span><h2>You can donate from 18.</h2><p class="lead">Until then, you can still help by spreading the word. We don\u2019t collect names or numbers from anyone under 18 on this page.</p>';
-    h+='<label for="anonCollege">Count me in for my college (optional)</label><select id="anonCollege"><option value="">Choose your college</option>'+CONFIG.COLLEGES.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select>';
-    h+='<p class="fine" style="margin-top:8px">This only adds one to your college\u2019s Future Hero count. No name or number is stored.</p><div class="err" id="e-anon"></div>';
+    h+='<label for="anonCollege">Count me in for my institute (optional)</label><select id="anonCollege"><option value="">Choose your institute</option>'+CONFIG.COLLEGES.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select>';
+    h+='<p class="fine" style="margin-top:8px">This only adds one to your institute\u2019s Future Hero count. No name or number is stored.</p><div class="err" id="e-anon"></div>';
     h+='<button class="btn" data-a="anonjoin">Count me in</button><button class="btn quiet" data-a="anonskip">Skip</button>';
   }
   return h;
@@ -203,7 +203,7 @@ register:function(){
   var h='<h2>Join the register</h2><form id="f" novalidate autocomplete="on">';
   h+='<label for="name">Full name</label><input type="text" id="name" name="name" autocomplete="name" maxlength="60"><div class="err" id="e-name"></div>';
   h+='<label for="mobile">Mobile number</label><div class="tel"><span>+91</span><input type="tel" id="mobile" name="mobile" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number"></div><div class="err" id="e-mobile"></div>';
-  h+='<label for="college">College</label><select id="college" name="college"><option value="">Choose your college</option>'+CONFIG.COLLEGES.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select><div class="err" id="e-college"></div>';
+  h+='<label for="college">Institute</label><select id="college" name="college"><option value="">Choose your institute</option>'+CONFIG.COLLEGES.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select><div class="err" id="e-college"></div>';
   h+='<label>Best way to reach you</label><div class="pills"><label><input type="radio" name="contact" value="WhatsApp" checked>WhatsApp</label><label><input type="radio" name="contact" value="Call">Call</label><label><input type="radio" name="contact" value="SMS">SMS</label></div>';
   h+='<div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>';
   h+='<label class="consent" for="consent"><input type="checkbox" id="consent"><span>I agree that '+esc(CONFIG.ORG_NAME)+' may contact me on this number about blood donation camps and urgent blood needs. My details are used only for this purpose and kept securely. I can ask for them to be deleted at any time: '+esc(CONFIG.CONTACT)+'.</span></label><div class="err" id="e-consent"></div>';
@@ -217,8 +217,7 @@ result:function(){
   h+='<div class="status '+S.sync+'" id="sync" role="status">'+esc(S.syncMsg)+'</div>';
   var next=o==='eligible'?'Next step: collect your sticker at the stall. We\u2019ll message you about the first donation camp.':'You\u2019re on our list. We\u2019ll message you when you can donate.';
   h+='<p class="lead" style="margin-top:16px">'+esc(next)+'</p>';
-  h+='<p class="fine" style="margin-top:6px">Friends who join through your link: <b>'+(r.referrals||0)+' of 3</b>. Bring 3 and you become a Champion.</p>';
-  h+='<button class="btn" data-a="save">Save my card as an image</button><button class="btn ghost" data-a="share">Share my link with friends</button><button class="btn ghost" data-a="level">Check my level</button>';
+  h+='<button class="btn" data-a="save">Save my card as an image</button><button class="btn ghost" data-a="share">Share my link with friends</button>';
   if(CONFIG.ORGAN_PLEDGE_URL)h+='<p class="fine">Interested in pledging organs? That is a separate register: <a href="'+esc(CONFIG.ORGAN_PLEDGE_URL)+'" target="_blank" rel="noopener">organ pledge</a>.</p>';
   h+='<button class="btn quiet" data-a="reset">Register another person</button>';
   return h;
@@ -284,7 +283,7 @@ toreg:function(){S.screen='register';render()},
 submit:function(){submitForm()},
 anonjoin:function(){
   var c=document.getElementById('anonCollege').value;
-  if(!c){document.getElementById('e-anon').textContent='Please choose your college, or tap Skip.';return}
+  if(!c){document.getElementById('e-anon').textContent='Please choose your institute, or tap Skip.';return}
   S.anonCollege=c;S.screen='anon';S.sync='pending';S.syncMsg='Saving\u2026';render();
   enqueue({anon:true,college:c,src:SRC,qid:genCode()});
 },
@@ -299,20 +298,11 @@ save:async function(){
 },
 share:async function(){
   var url=S.reg?pageUrl()+'?src=ref&ref='+encodeURIComponent(S.reg.id):pageUrl()+'?src=ref';
-  var text='I just joined the blood donor register at '+CONFIG.EVENT_NAME+'. Join me and help your college win: ';
+  var text='I just joined the blood donor register at '+CONFIG.EVENT_NAME+'. Join me and help your institute win:';
   try{
     if(navigator.share){await navigator.share({title:'Be a Lifesaver',text:text,url:url});return}
   }catch(e){if(e&&e.name==='AbortError')return}
   window.open('https://wa.me/?text='+encodeURIComponent(text+url),'_blank','noopener');
-},
-level:async function(){
-  if(!S.reg)return;
-  if(IS_DEMO){setSync('pending','Demo mode: levels update once the page is connected to your Sheet.');return}
-  try{
-    var r=await fetch(CONFIG.API_URL+'?action=me&code='+encodeURIComponent(S.reg.id));
-    var j=await r.json();
-    if(j&&j.ok){S.reg.referrals=j.referrals;render()}
-  }catch(e){setSync('pending','Could not check right now. Try again in a moment.')}
 },
 reset:function(){S=fresh();render()}
 };
@@ -334,7 +324,7 @@ function submitForm(){
   function err(id,m){document.getElementById('e-'+id).textContent=m;if(m)ok=false}
   err('name',name.length<2?'Please enter your name.':'');
   err('mobile',/^[6-9]\d{9}$/.test(mobile)?'':'Enter a valid 10-digit mobile number.');
-  err('college',college?'':'Please choose your college.');
+  err('college',college?'':'Please choose your institute.');
   err('consent',consent?'':'Please tick the box to join.');
   if(!ok)return;
   var reg={id:genCode(),name:name,mobile:mobile,college:college,contact:contact,bloodGroup:S.bloodGroup,outcome:S.outcome,quiz:S.points,src:SRC,ref:REF,consent:true,hp:hp,referrals:0};
@@ -380,7 +370,7 @@ function done(p,j){
   if(!isCurrent(p))return;
   if(j.demo){setSync('pending','Demo mode: nothing was saved. Set API_URL in the page to go live.');return}
   if(!p.anon&&j.code&&j.code!==S.reg.id){S.reg.id=j.code;S.sync='ok';S.syncMsg='You were already on the register. Welcome back!';render();return}
-  setSync('ok',p.anon?'Counted for your college. Thank you!':'Registered. Your details are saved.');
+  setSync('ok',p.anon?'Counted for your institute. Thank you!':'Registered. Your details are saved.');
 }
 function failed(p,msg){if(isCurrent(p))setSync('err','Could not save: '+msg+' Please tell a volunteer.')}
 queue=loadQ();if(queue.length&&!/[?&]view=board/.test(location.search))flush();
@@ -416,7 +406,7 @@ function cardBlob(){
 /* ---------- live college leaderboard: open this page with ?view=board ---------- */
 function boardView(){
   document.body.classList.add('board');
-  document.title='College leaderboard';
+  document.title='Institute leaderboard';
   var demo=IS_DEMO;
   async function load(){
     var data;
@@ -425,7 +415,7 @@ function boardView(){
     if(!data||!data.ok&&!demo)return;
     var rows=Object.keys(data.colleges).map(function(k){return[k,data.colleges[k]]}).sort(function(a,b){return b[1]-a[1]});
     var max=Math.max.apply(null,rows.map(function(r){return r[1]}).concat([1]));
-    app.innerHTML='<div class="bd"><h1>Which college saves the most lives?'+(demo?'<span class="demo">DEMO DATA</span>':'')+'</h1><p class="sub">'+esc(CONFIG.ORG_NAME)+' \u00b7 blood donor register</p>'+
+    app.innerHTML='<div class="bd"><h1>Which institute saves the most lives?'+(demo?'<span class="demo">DEMO DATA</span>':'')+'</h1><p class="sub">'+esc(CONFIG.ORG_NAME)+' \u00b7 blood donor register</p>'+
       '<div class="tot"><div><b>'+data.total+'</b><span>donors registered</span></div><div><b>'+(data.futureHeroes||0)+'</b><span>Future Heroes</span></div></div>'+
       rows.map(function(r){return '<div class="brow"><span>'+esc(r[0])+'</span><div class="t"><i style="width:'+Math.round(r[1]/max*100)+'%"></i></div><span class="n">'+r[1]+'</span></div>'}).join('')+
       '<p class="join">Scan the code or tap the tag at our stall, or open <b>'+esc(pageUrl().replace(/^https?:\/\//,''))+'</b></p></div>';
